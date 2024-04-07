@@ -14,7 +14,7 @@ const teacher= new mongoose.Schema({
     username: String,
     password: String,
     name: String,
-    rollno: Number,
+    id: Number,
     mobileno: Number
 
 })
