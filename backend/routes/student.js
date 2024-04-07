@@ -3,6 +3,8 @@ const router = express.Router();
 const {signupBody} = require("../types/student");
 const { Student } = require("../database/db");
 const { error } = require("console");
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require("../config")
 
 router.get("/test",(req,res)=>{
     res.json({
@@ -36,8 +38,11 @@ router.post("/signup",async (req,res)=>{
                 mobileno: req.body.mobileno
             })
             if(user){
+                const userId = user._id;
+                const token = jwt.sign({userId},JWT_SECRET);
                 return res.json({
-                    msg: "user created successfully"
+                    msg: "user created successfully",
+                    token: token
                 })
             }
         }
