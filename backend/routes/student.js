@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router(); 
-const {signupBody} = require("../types/student");
+const {signupBody, signinBody} = require("../types/student");
 const { Student } = require("../database/db");
 const { error } = require("console");
 const jwt = require("jsonwebtoken");
@@ -51,6 +51,40 @@ router.post("/signup",async (req,res)=>{
                 msg: "unexpected error occured"
              })
 
+        }
+    }
+})
+router.get("/signin",async(req,res)=>{
+    const signinValidation=signinBody.safeParse(req.body);
+    if(!signinValidation.success){
+        return res.status(403).json({
+            msg: "incorrect input"
+        })
+    }
+    else{
+        try{
+            const findUser= await Student.findOne({
+                username: req.body.username,
+                password: req.body.password
+            })
+            if(findUser){
+                const userId=findUser._id;
+                const token = jwt.sign({userId},JWT_SECRET);
+
+                return res.status(200).json({
+                    msg: "Sign in Successful",
+                    token: token
+                })
+            }
+            else{
+                return res.status(403).json({
+                         msg: "User doesn't exist"
+                })
+            }
+        }catch(err){
+            res.status(500).json({
+                msg: "An unexpected error occured"
+            })
         }
     }
 })
