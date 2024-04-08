@@ -4,7 +4,8 @@ const {signupBody, signinBody} = require("../types/student");
 const { Student } = require("../database/db");
 const { error } = require("console");
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET} = require("../config")
+const {JWT_SECRET} = require("../config");
+const { studentMiddleware } = require("../middleware/student");
 
 router.get("/test",(req,res)=>{
     res.json({
@@ -87,6 +88,24 @@ router.get("/signin",async(req,res)=>{
             })
         }
     }
+})
+
+router.put("/update",studentMiddleware, async(req,res)=>{
+    const updateUser= await Student.updateOne(req.body , {
+        id: req.userId
+
+    })
+    if(updateUser){
+         return res.status(200).json({
+            msg: "user details updated"
+        })
+    }
+    else{
+        return res.status(500).json({
+            msg: "internal server error"
+        })
+    }
+
 })
 
 
