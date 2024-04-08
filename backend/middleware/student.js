@@ -16,6 +16,7 @@ const studentMiddleware=(req,res,next)=>{
         if(decoded.userId){
             req.userId = decoded.userId;
         next();
+        console.log("agas");
         }
         else{
             return res.status(403).json({
