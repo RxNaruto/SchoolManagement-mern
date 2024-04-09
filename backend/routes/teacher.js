@@ -94,6 +94,31 @@ router.get("/signin",async(req,res)=>{
     }
 })
 
+router.put("/update", teacherMiddleware, async (req, res) => {
+    try {
+        const updatedTeacher = await Teacher.findOneAndUpdate(
+            { _id: req.userId },
+            req.body,
+            { new: true }
+        ); 
+
+        if (!updatedTeacher) {
+            return res.status(404).json({
+                 msg: "User not found" 
+                });
+        }
+
+        res.json({
+             msg: "Updated successfully", student: updatedTeacher });
+    } catch (error) {
+        res.status(500).json({ 
+            msg: "Internal server error" 
+        });
+    }
+});
+
+
+
 router.get("/test2",teacherMiddleware,(req,res)=>{
     res.status(200).json({
         msg: "authorized user"

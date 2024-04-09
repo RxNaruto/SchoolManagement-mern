@@ -96,7 +96,7 @@ router.put("/update", studentMiddleware, async (req, res) => {
             { _id: req.userId },
             req.body,
             { new: true }
-        );
+        ); 
 
         if (!updatedStudent) {
             return res.status(404).json({
