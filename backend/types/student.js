@@ -1,6 +1,6 @@
 const z = require('zod');
 
-const signupBody=z.object({
+const signupBodyStudent=z.object({
     username: z.string().email(),
     password: z.string(),
     name: z.string(),
@@ -9,12 +9,12 @@ const signupBody=z.object({
 
 })
 
-const signinBody=z.object({
+const signinBodyStudent=z.object({
     username: z.string().email(),
     password: z.string()
 })
 
 module.exports={
-    signupBody,
-    signinBody
+    signupBodyStudent,
+    signinBodyStudent
 }

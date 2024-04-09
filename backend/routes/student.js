@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router(); 
-const {signupBody, signinBody} = require("../types/student");
+const {signupBody, signinBody, signupBodyStudent, signinBodyStudent} = require("../types/student");
 const { Student } = require("../database/db");
 const { error } = require("console");
 const jwt = require("jsonwebtoken");
@@ -14,7 +14,7 @@ router.get("/test",(req,res)=>{
 })
 
 router.post("/signup",async (req,res)=>{
-    const signupValdidation=signupBody.safeParse(req.body);
+    const signupValdidation=signupBodyStudent.safeParse(req.body);
     if(!signupValdidation.success){
         return res.status(403).json({
             msg: "Incorrect inputs"
@@ -56,7 +56,7 @@ router.post("/signup",async (req,res)=>{
     }
 })
 router.get("/signin",async(req,res)=>{
-    const signinValidation=signinBody.safeParse(req.body);
+    const signinValidation=signinBodyStudent.safeParse(req.body);
     if(!signinValidation.success){
         return res.status(403).json({
             msg: "incorrect input"

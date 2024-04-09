@@ -4,7 +4,10 @@ const {signupBody} = require("../types/teacher");
 const { Teacher } = require("../database/db");
 const { error } = require("console");
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET} = require("../config")
+const {JWT_SECRET} = require("../config");
+const { signinBodyTeacher } = require("../types/teacher");
+const { signupBodyTeacher } = require("../types/teacher");
+const { teacherMiddleware } = require("../middleware/teacher");
 
 router.get("/test",(req,res)=>{
     res.json({
@@ -13,7 +16,7 @@ router.get("/test",(req,res)=>{
 })
 
 router.post("/signup",async (req,res)=>{
-    const signupValdidation=signupBody.safeParse(req.body);
+    const signupValdidation=signupBodyTeacher.safeParse(req.body);
     if(!signupValdidation.success){
         return res.status(403).json({
             msg: "Incorrect inputs"
@@ -39,6 +42,7 @@ router.post("/signup",async (req,res)=>{
             })
             if(user){
                 const userId = user._id;
+                console.log(userId);
                 const token = jwt.sign({userId},JWT_SECRET);
                 return res.json({
                     msg: "user created successfully",
@@ -53,6 +57,47 @@ router.post("/signup",async (req,res)=>{
 
         }
     }
+})
+
+router.get("/signin",async(req,res)=>{
+    const signinValidation=signinBodyTeacher.safeParse(req.body);
+    if(!signinValidation.success){
+        return res.status(403).json({
+            msg: "incorrect input"
+        })
+    }
+    else{
+        try{
+            const findUser= await Teacher.findOne({
+                username: req.body.username,
+                password: req.body.password
+            })
+            if(findUser){
+                const userId=findUser._id;
+                const token = jwt.sign({userId},JWT_SECRET);
+
+                return res.status(200).json({
+                    msg: "Sign in Successful",
+                    token: token
+                })
+            }
+            else{
+                return res.status(403).json({
+                         msg: "User doesn't exist"
+                })
+            }
+        }catch(err){
+            res.status(500).json({
+                msg: "An unexpected error occured"
+            })
+        }
+    }
+})
+
+router.get("/test2",teacherMiddleware,(req,res)=>{
+    res.status(200).json({
+        msg: "authorized user"
+    })
 })
 
 
