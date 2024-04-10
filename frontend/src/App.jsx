@@ -1,10 +1,20 @@
 import { BrowserRouter,Routes,Route } from "react-router-dom";
-import { Heading } from "./components/Heading";
+import { Signup } from "./pages/Signup";
+
 
 function App(){
   return(
     <>
-    <Heading label={"Signup"} />
+    <BrowserRouter >
+    <Routes>
+
+     <Route path="/signup" element={<Signup />}/>
+     <Route/>
+
+
+
+    </Routes>
+    </BrowserRouter>
     </>
   )
 }

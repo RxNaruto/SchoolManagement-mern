@@ -13,6 +13,7 @@ router.get("/test", (req, res) => {
     })
 })
 
+
 router.post("/signup", async (req, res) => {
     const signupValdidation = signupBodyStudent.safeParse(req.body);
     if (!signupValdidation.success) {
