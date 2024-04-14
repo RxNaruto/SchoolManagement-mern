@@ -1,22 +1,58 @@
+import { useState } from "react"
 import { Button } from "../components/Button"
 import { Heading } from "../components/Heading"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
+import axios from "axios"
 
 export const Signup=()=>{
+    const[username,setUsername]=useState("");
+    const[password,setPassword]=useState("");
+    const[name,setName]=useState("");
+    const[rollno,setRollno]=useState();
+    const[mobileno,setMobileno]=useState();
+
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="flex flex-col justify-center">
             
             <div className="bg-lightningblue rounded-xl w-96 p-4 px-4 h-max text-center">
             <Heading label={"Signup"}/>
             <SubHeading label={"Enter your information to create account"} />
-            <InputBox  placeholder= "Jon@email.com" label={"Username"}/>
-            <InputBox  placeholder= "password" label={"Password"}/>
-            <InputBox  placeholder= "Jon Doe" label={"Name"}/>
-            <InputBox  placeholder= "1232" label={"Roll no."}/>
-            <InputBox  placeholder= "9873232323" label={"Mobile No."}/>
+            <InputBox onChange={(e)=>{
+                setUsername(e.target.value);
+            }} placeholder= "Jon@email.com" label={"Username"} />
+            <InputBox onChange={(e)=>{
+                setPassword(e.target.value);
+            }} placeholder= "Password" label={"Password"} />
+            <InputBox onChange={(e)=>{
+                setName(e.target.value);
+            }} placeholder= "Jon Doe" label={"Name"} />
+            <InputBox onChange={(e)=>{
+                setRollno(Number(e.target.value));
+            }} placeholder= "1232" label={"Roll no."}  />
+            <InputBox onChange={(e)=>{
+                setMobileno(Number(e.target.value));
+            }} placeholder= "9873232323" label={"Mobile No."} />
             <div className="pt-8 pb-2">
-                <Button label={"Signup"} />
+                <Button onClick={
+                    async()=>{
+                        try{
+                            await axios.post("http://localhost:3000/api/v1/student/signup",{
+                                username,
+                                password,
+                                name,
+                                rollno,
+                                mobileno
+                            })
+                        }catch(e){
+                            console.log(username);
+                            console.log(password);
+                            console.log(name);
+                            console.log(rollno);
+                            console.log(mobileno);
+                        }
+                    }
+                } label={"Signup"} />
             </div>
             </div>
                 
