@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
         }
     }
 })
-router.get("/signin", async (req, res) => {
+router.post("/signin", async (req, res) => {
     const signinValidation = signinBodyStudent.safeParse(req.body);
     if (!signinValidation.success) {
         return res.status(403).json({
