@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { signupBody } = require("../types/teacher");
-const { Teacher, SchoolData } = require("../database/db");
+const { Teacher, SchoolData, Student } = require("../database/db");
 const { error } = require("console");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
@@ -141,6 +141,17 @@ router.get("/test2", teacherMiddleware, (req, res) => {
     res.status(200).json({
         msg: "authorized user"
     })
+})
+
+router.get("/allStudents",async(req,res)=>{
+    const allstudents= await Student.find({});
+    if(allstudents){
+        res.json({
+            allstudents
+        })
+    }
+
+    
 })
 
 
