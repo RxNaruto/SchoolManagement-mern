@@ -3,6 +3,7 @@ import { Signup } from "./pages/Signup";
 import { Signin } from "./pages/Signin";
 import { User } from "./pages/User";
 import AllStudents from "./pages/AllStudents";
+import SingleStudent from "./pages/SingleStudent";
 
 
 function App(){
@@ -15,6 +16,7 @@ function App(){
      <Route path="/signin" element={<Signin />}/>
      <Route path="/user" element={<User />}/>
      <Route path="/allStudents" element={<AllStudents />} />
+     <Route path="/oneStudents" element={<SingleStudent />} />
 
 
 

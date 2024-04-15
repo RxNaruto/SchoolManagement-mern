@@ -143,11 +143,11 @@ router.get("/test2", teacherMiddleware, (req, res) => {
     })
 })
 
-router.get("/allStudents",async(req,res)=>{
-    const allstudents= await Student.find({});
-    if(allstudents){
+router.get("/findStudents",async(req,res)=>{
+    const response= await Student.find({});
+    if(response){
         res.json({
-            allstudents
+            response: response
         })
     }
 

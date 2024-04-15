@@ -114,16 +114,6 @@ router.put("/update", studentMiddleware, async (req, res) => {
     }
 });
 
-router.get("/findstudents",async(req,res)=>{
-    const response= await Student.find({});
-    if(response){
-        res.json({
-            response: response
-        })
-    }
-
-    
-})
 router.get("/findstudents1",async(req,res)=>{
     const response= await Student.findOne({
         _id: "6612d3defcc8007041a6f49b"
