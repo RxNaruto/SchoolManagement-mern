@@ -1,5 +1,5 @@
 export const User=()=>{
 return <div>
-    welcome user
+    hi users
 </div>
 }

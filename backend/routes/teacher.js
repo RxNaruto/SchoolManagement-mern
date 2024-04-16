@@ -8,6 +8,7 @@ const { JWT_SECRET } = require("../config");
 const { signinBodyTeacher } = require("../types/teacher");
 const { signupBodyTeacher } = require("../types/teacher");
 const { teacherMiddleware } = require("../middleware/teacher");
+const { studentMiddleware } = require("../middleware/student");
 
 router.get("/test", (req, res) => {
     res.json({
@@ -118,7 +119,7 @@ router.put("/update", teacherMiddleware, async (req, res) => {
     }
 });
 
-router.post("/setData", teacherMiddleware, async (req, res) => {
+router.post("/setData",  teacherMiddleware,async (req, res) => {
     const schData = await SchoolData.create({
         class: req.body.class,
         subjects: req.body.subjects
@@ -137,13 +138,9 @@ router.post("/setData", teacherMiddleware, async (req, res) => {
 
 
 
-router.get("/test2", teacherMiddleware, (req, res) => {
-    res.status(200).json({
-        msg: "authorized user"
-    })
-})
 
-router.get("/findStudents",async(req,res)=>{
+
+router.get("/findStudents",studentMiddleware,async(req,res)=>{
     const response= await Student.find({});
     if(response){
         res.json({
