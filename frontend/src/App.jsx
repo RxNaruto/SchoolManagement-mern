@@ -4,6 +4,8 @@ import { Signin } from "./pages/Signin";
 import { User } from "./pages/User";
 import AllStudents from "./pages/AllStudents";
 import SingleStudent from "./pages/SingleStudent";
+import { SignupTeacher } from "./pages/SignupTeacher";
+import { SigninTeacher } from "./pages/SigninTeacher";
 
 
 function App(){
@@ -17,6 +19,8 @@ function App(){
      <Route path="/user" element={<User />}/>
      <Route path="/allStudents" element={<AllStudents />} />
      <Route path="/oneStudents" element={<SingleStudent />} />
+     <Route path="/teacher/signup" element={<SignupTeacher />}/>
+     <Route path="/teacher/signin" element={<SigninTeacher />}/>
 
 
 
